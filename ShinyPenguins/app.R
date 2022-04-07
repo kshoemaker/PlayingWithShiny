@@ -58,7 +58,7 @@ server <- function(input, output) {
        p
     })
     output$ColorPlot <- renderPlot(({
-        p2 <- ggplot(my_penguins, aes(x = .data[[input$color]])) + geom_bar()
+        p2 <- ggplot(my_penguins, aes(x = .data[[input$color]], fill =.data[[input$color]] )) + geom_bar()
         p2
     }))
 }
