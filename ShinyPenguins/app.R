@@ -11,9 +11,12 @@
 
 library(shiny)
 library(tidyverse)
+library(plotly)
 
-## easier one first
-year_options <- unique(penguins$year)
+
+color_options <- c("species", "island", "year", "sex")
+axis_options <- c("bill_length_mm", "bill_depth_mm", "flipper_length_mm", "body_mass_g")
+
 # Define UI for application that draws a histogram
 ui <- fluidPage(
 
@@ -23,26 +26,41 @@ ui <- fluidPage(
     # Sidebar with a slider input for number of bins 
     sidebarLayout(
         sidebarPanel(
-            selectInput(inputId = "year",
-                        label = "Which year of penguins?",
-                        choices = year_options   )
+            selectInput(inputId = "color",
+                        label = "Color your points by:",
+                        choices = color_options  ),
+            selectInput(inputId = "x",
+                        label = "Variable on the X axis:",
+                        choices = axis_options, 
+                        selected = "bill_length_mm"),
+            selectInput(inputId = "y",
+                        label = "Variable on the Y axis:",
+                        choices = axis_options, 
+                        selected = "bill_depth_mm"  )
         ),
 
         # Show a plot of the generated distribution
         mainPanel(
-           plotOutput("PenguinPlot")
+           plotOutput("PenguinPlot"), 
+           plotOutput("ColorPlot")
         )
     )
 )
 
 # Define server logic required to draw a histogram
 server <- function(input, output) {
-
+    
+    # color_choice <- reactive({get(input$color)})
+    my_penguins <- penguins %>% mutate(year = factor(year))
+    
     output$PenguinPlot <- renderPlot({
-        subset_penguins <- penguins %>% filter(year == input$year)
-       p <- ggplot(subset_penguins, aes(x = body_mass_g, y = flipper_length_mm)) + geom_point()
+       p <- ggplot(my_penguins, aes(x = .data[[input$x]], y = .data[[input$y]], col = .data[[input$color]])) + geom_point()
        p
     })
+    output$ColorPlot <- renderPlot(({
+        p2 <- ggplot(my_penguins, aes(x = .data[[input$color]])) + geom_bar()
+        p2
+    }))
 }
 
 # Run the application 
