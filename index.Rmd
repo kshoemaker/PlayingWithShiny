@@ -1,0 +1,28 @@
+---
+title: "Penguin Plotly"
+author: "Dr. Shoemaker"
+date: "4/7/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Penguin Plot
+```{r}
+library(tidyverse)
+library(palmerpenguins)
+
+p <- ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm, col = species)) + geom_point()
+p
+```
+
+
+# Penguin Plotly
+
+```{R}
+library(plotly)
+
+ggplotly(p)
+```
