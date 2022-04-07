@@ -32,7 +32,7 @@ my_server <- function(input, output) {
     # using renderText(), so the UI can display it! 
     # it will be automatically recalculated when the value changes
     output$message <- renderText({
-        message_str <- paste("Hello,", input$username) # Using the input!
+        message_str <- paste("Hello,", input$username, ", how are you?") # Using the input!
         message_str # the last line gets returned
     })
 }

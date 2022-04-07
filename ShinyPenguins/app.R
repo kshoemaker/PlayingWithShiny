@@ -10,7 +10,10 @@
 #
 
 library(shiny)
+library(tidyverse)
 
+## easier one first
+year_options <- unique(penguins$year)
 # Define UI for application that draws a histogram
 ui <- fluidPage(
 
@@ -20,16 +23,14 @@ ui <- fluidPage(
     # Sidebar with a slider input for number of bins 
     sidebarLayout(
         sidebarPanel(
-            sliderInput("bins",
-                        "Number of bins:",
-                        min = 1,
-                        max = 50,
-                        value = 30)
+            selectInput(inputId = "year",
+                        label = "Which year of penguins?",
+                        choices = year_options   )
         ),
 
         # Show a plot of the generated distribution
         mainPanel(
-           plotOutput("distPlot")
+           plotOutput("PenguinPlot")
         )
     )
 )
@@ -37,13 +38,10 @@ ui <- fluidPage(
 # Define server logic required to draw a histogram
 server <- function(input, output) {
 
-    output$distPlot <- renderPlot({
-        # generate bins based on input$bins from ui.R
-        x    <- faithful[, 2]
-        bins <- seq(min(x), max(x), length.out = input$bins + 1)
-
-        # draw the histogram with the specified number of bins
-        hist(x, breaks = bins, col = 'darkgray', border = 'white')
+    output$PenguinPlot <- renderPlot({
+        subset_penguins <- penguins %>% filter(year == input$year)
+       p <- ggplot(subset_penguins, aes(x = body_mass_g, y = flipper_length_mm)) + geom_point()
+       p
     })
 }
 
