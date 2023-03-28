@@ -9,10 +9,11 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Plotly [link here](https://plotly.com/ggplot2/) is one of the two ways we will discuss to make interactive graphs. You can embed them in the application "Dash" to make dashboards, but also you can also just make your reports *dynamic*.
+Plotly ([link here](https://plotly.com/ggplot2/)) is one of the two ways we will discuss to make interactive graphs. You can embed them in the application "Dash" to make dashboards, but also you can also just make your reports *dynamic*.
 
 > also, you'll notice that this github is setup with a special new ability - This is a website now too, displaying the html of the report! 
-> 
+
+
 # Penguin Plot
 
 First, we make the plot, by saving the ggplot as an object.

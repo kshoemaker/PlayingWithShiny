@@ -12,6 +12,7 @@
 library(shiny)
 library(tidyverse)
 library(plotly)
+library(palmerpenguins)
 
 
 color_options <- c("species", "island", "year", "sex")
@@ -49,7 +50,7 @@ ui <- fluidPage(
 
 # Define server logic required to draw a histogram
 server <- function(input, output) {
-    
+  
     # color_choice <- reactive({get(input$color)})
     my_penguins <- penguins %>% mutate(year = factor(year))
     
