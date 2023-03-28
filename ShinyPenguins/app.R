@@ -1,4 +1,4 @@
-# Goal: Use the demo to make a plot of the penguins with selectInput for coloring the points
+# Goal: Use the demo to make a plot of the starWars with selectInput for coloring the points
 
 
 # This is a Shiny web application. You can run the application by clicking
